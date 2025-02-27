@@ -1,106 +1,105 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import Header from '../components/Header';
+
+// Fee Data (Empty to show "No data found")
+const feeData = [
+  { installmentNo: 1, dueDate: 'No data found', amount: 'No data found', balance: 'No data found', totalBalance: 'No data found' },
+  { installmentNo: 2, dueDate: 'No data found', amount: 'No data found', balance: 'No data found', totalBalance: 'No data found' },
+  { installmentNo: 3, dueDate: 'No data found', amount: 'No data found', balance: 'No data found', totalBalance: 'No data found' },
+  { installmentNo: 4, dueDate: 'No data found', amount: 'No data found', balance: 'No data found', totalBalance: 'No data found' },
+  { installmentNo: 5, dueDate: 'No data found', amount: 'No data found', balance: 'No data found', totalBalance: 'No data found' },
+];
 
 const FeeDetailsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Fee Details</Text>
+      <Header title="Fee Details" />
 
-      <ScrollView>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Total Fees</Text>
-          <Text style={styles.amount}>₹ 0</Text>
-        </View>
+      <View style={styles.content}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View>
+            {/* Table Header */}
+            <View style={styles.tableHeader}>
+              <Text style={styles.headerCell}>Fee Installment No.</Text>
+              <Text style={styles.headerCell}>Installment Due Date</Text>
+              <Text style={styles.headerCell}>Installment Amount</Text>
+              <Text style={styles.headerCell}>Balance Installment</Text>
+              <Text style={styles.headerCell}>Total Balance</Text>
+            </View>
 
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Total Paid</Text>
-          <Text style={styles.amount}>₹ 0</Text>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Total Pending</Text>
-          <Text style={styles.amount}>₹ 0</Text>
-        </View>
-
-        <Text style={styles.sectionTitle}>Installments</Text>
-
-        <View style={styles.tableHeader}>
-          <Text style={styles.tableHeaderText}>Installment No.</Text>
-          <Text style={styles.tableHeaderText}>Due Date</Text>
-          <Text style={styles.tableHeaderText}>Amount</Text>
-        </View>
-
-        {[1, 2, 3, 4, 5].map((item) => (
-          <View style={styles.tableRow} key={item}>
-            <Text style={styles.tableCell}>{item}</Text>
-            <Text style={styles.tableCell}>No data found</Text>
-            <Text style={styles.tableCell}>No data found</Text>
+            {/* Section Container wrapping only table rows */}
+            <View style={styles.sectionContainer}>
+              {feeData.length > 0 ? (
+                feeData.map((item, index) => (
+                  <View key={index} style={styles.tableRow}>
+                    <Text style={styles.rowCell}>{item.installmentNo}.</Text>
+                    <Text style={styles.rowCell}>{item.dueDate}</Text>
+                    <Text style={styles.rowCell}>{item.amount}</Text>
+                    <Text style={styles.rowCell}>{item.balance}</Text>
+                    <Text style={styles.rowCell}>{item.totalBalance}</Text>
+                  </View>
+                ))
+              ) : (
+                <View style={styles.noDataContainer}>
+                  <Text style={styles.noDataText}>No Data Found</Text>
+                </View>
+              )}
+            </View>
           </View>
-        ))}
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#f5f5f5',
-      padding: 20,
-    },
-    title: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      color: '#2E3192',
-      marginBottom: 15,
-    },
-    card: {
-      backgroundColor: '#fff',
-      padding: 15,
-      marginBottom: 10,
-      borderRadius: 8,
-      elevation: 3,
-    },
-    cardTitle: {
-      fontSize: 16,
-      color: '#555',
-    },
-    amount: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginTop: 5,
-    },
-    sectionTitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginTop: 15,
-      marginBottom: 5,
-      color: '#2E3192',
-    },
-    tableHeader: {
-      flexDirection: 'row',
-      backgroundColor: '#2E3192',
-      padding: 10,
-      borderRadius: 8,
-    },
-    tableHeaderText: {
-      flex: 1,
-      color: '#fff',
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    tableRow: {
-      flexDirection: 'row',
-      padding: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: '#ddd',
-    },
-    tableCell: {
-      flex: 1,
-      textAlign: 'center',
-      color: '#333',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#F8F8F8',
+  },
+  content: {
+    flex: 1,
+    padding: 15,
+    marginTop: 50,
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#FFD700',
+    paddingVertical: 25,
+    paddingHorizontal: 10,
+  },
+  sectionContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    paddingBottom: 5,
+  },
+  tableRow: {
+    flexDirection: 'row',
+    backgroundColor: '#FFF8DC',
+    paddingVertical: 25,
+    paddingHorizontal: 10,
+  },
+  headerCell: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    width: 160,
+    textAlign: 'center',
+  },
+  rowCell: {
+    fontSize: 14,
+    width: 160,
+    textAlign: 'center',
+  },
+  noDataContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  noDataText: {
+    color: 'red',
+    fontSize: 14,
+  },
+});
 
 export default FeeDetailsScreen;

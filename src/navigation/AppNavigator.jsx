@@ -6,6 +6,8 @@ import CustomDrawerContent from '../components/CustomDrawerContent';
 import StudentDashboardScreen from '../screens/StudentDashboardScreen';
 import FeeDetailsScreen from '../screens/FeeDetailsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
+import DownloadsScreen from '../screens/DownloadsScreen';
+import TestAnalysisScreen from '../screens/TestAnalysisScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -38,6 +40,10 @@ const AppNavigator = () => (
       <Drawer.Screen name="Upload" component={UploadScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
       <Drawer.Screen name="Fees" component={FeeDetailsScreen} />
+      <Drawer.Screen name="Downloads" component={DownloadsScreen} />
+      <Drawer.Screen name="TestReport" component={TestAnalysisScreen} />
+
+
     </Drawer.Navigator>
   </NavigationContainer>
 );
