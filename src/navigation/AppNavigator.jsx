@@ -8,6 +8,9 @@ import FeeDetailsScreen from '../screens/FeeDetailsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import DownloadsScreen from '../screens/DownloadsScreen';
 import TestAnalysisScreen from '../screens/TestAnalysisScreen';
+import UploadVerificationScreen from '../screens/UploadVerificationScreen';
+import VerificationTwoScreen from '../screens/VerificationTwoScreen';
+import UpdateProfileScreen from '../screens/UpdateProfileScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -37,11 +40,13 @@ const AppNavigator = () => (
     >
       <Drawer.Screen name="Home" component={StudentDashboardScreen} />
       <Drawer.Screen name="Messages" component={MessagesScreen} />
-      <Drawer.Screen name="Upload" component={UploadScreen} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen name="Upload" component={UploadVerificationScreen} />
+      <Drawer.Screen name="Profile" component={UpdateProfileScreen} />
       <Drawer.Screen name="Fees" component={FeeDetailsScreen} />
       <Drawer.Screen name="Downloads" component={DownloadsScreen} />
       <Drawer.Screen name="TestReport" component={TestAnalysisScreen} />
+      <Drawer.Screen name="VerificationTwo" component={VerificationTwoScreen} />
+
 
 
     </Drawer.Navigator>
