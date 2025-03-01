@@ -11,6 +11,8 @@ import TestAnalysisScreen from '../screens/TestAnalysisScreen';
 import UploadVerificationScreen from '../screens/UploadVerificationScreen';
 import VerificationTwoScreen from '../screens/VerificationTwoScreen';
 import UpdateProfileScreen from '../screens/UpdateProfileScreen';
+import OldTestsScreen from '../screens/OldTestsScreen';
+import ActiveTestsScreen from '../screens/ActiveTestsScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -46,6 +48,10 @@ const AppNavigator = () => (
       <Drawer.Screen name="Downloads" component={DownloadsScreen} />
       <Drawer.Screen name="TestReport" component={TestAnalysisScreen} />
       <Drawer.Screen name="VerificationTwo" component={VerificationTwoScreen} />
+      <Drawer.Screen name="OldTests" component={OldTestsScreen} />
+      <Drawer.Screen name="ActiveTests" component={ActiveTestsScreen} />
+
+
 
 
 

@@ -22,11 +22,12 @@ const styles = StyleSheet.create({
   },
   content: {
     marginVertical:15,
-    padding: 15,
+    padding: 10,
   },
   description: {
-    fontSize: 15,
+    fontSize: 16,
     color: '#000',
+    fontWeight:'bold'
   },
 });
 

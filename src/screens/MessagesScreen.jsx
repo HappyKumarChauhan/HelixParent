@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'left',
     marginVertical: 25,
+    fontWeight:'bold'
   },
   tableHeader: {
     flexDirection: 'row',
