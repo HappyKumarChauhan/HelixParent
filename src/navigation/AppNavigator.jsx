@@ -13,6 +13,7 @@ import VerificationTwoScreen from '../screens/VerificationTwoScreen';
 import UpdateProfileScreen from '../screens/UpdateProfileScreen';
 import OldTestsScreen from '../screens/OldTestsScreen';
 import ActiveTestsScreen from '../screens/ActiveTestsScreen';
+import BottomTabs from './BottomTabs';
 
 const Drawer = createDrawerNavigator();
 
@@ -40,7 +41,7 @@ const AppNavigator = () => (
         },
       }}
     >
-      <Drawer.Screen name="Home" component={StudentDashboardScreen} />
+      <Drawer.Screen name="Home" component={BottomTabs} />
       <Drawer.Screen name="Messages" component={MessagesScreen} />
       <Drawer.Screen name="Upload" component={UploadVerificationScreen} />
       <Drawer.Screen name="Profile" component={UpdateProfileScreen} />

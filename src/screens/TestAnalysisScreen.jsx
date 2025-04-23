@@ -1,108 +1,92 @@
-// import React from 'react';
-// import { View, Text, StyleSheet, ScrollView } from 'react-native';
-// import Header from '../components/Header';
-
-// const TestAnalysisScreen = () => {
-//   return (
-//     <View style={styles.container}>
-//       <Header title="Test Analysis Report" />
-
-//       <View style={styles.content}>
-//         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-//           <View>
-//             {/* Table Header */}
-//             <View style={styles.tableHeader}>
-//               <Text style={styles.headerCell}>Sr No.</Text>
-//               <Text style={styles.headerCell}>Test Name</Text>
-//               <Text style={styles.headerCell}>Result</Text>
-//               <Text style={styles.headerCell}>Subject Name</Text>
-//             </View>
-
-//             {/* No Data Found Message */}
-//             <View style={styles.noDataContainer}>
-//               <Text style={styles.noDataText}>No Data Found</Text>
-//             </View>
-//           </View>
-//         </ScrollView>
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#F8F8F8',
-//   },
-//   content: {
-//     flex: 1,
-//     padding: 15,
-//   },
-//   tableHeader: {
-//     flexDirection: 'row',
-//     backgroundColor: '#FFD700',
-//     paddingVertical: 10,
-//     paddingHorizontal: 10,
-//   },
-//   headerCell: {
-//     fontWeight: 'bold',
-//     fontSize: 14,
-//     width: 120, 
-//     textAlign: 'center',
-//   },
-//   noDataContainer: {
-//     flexDirection: 'row',
-//     backgroundColor: '#FFF8DC',
-//     paddingVertical: 10,
-//     paddingHorizontal: 10,
-//   },
-//   noDataText: {
-//     color: 'red',
-//     fontSize: 14,
-//     marginLeft: 10,
-//   },
-// });
-
-// export default TestAnalysisScreen;
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+  ScrollView,
+} from 'react-native';
 import Header from '../components/Header';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-// Empty Data Array
-const testData = [];
+// Enable LayoutAnimation on Android
+if (Platform.OS === 'android') {
+  UIManager.setLayoutAnimationEnabledExperimental &&
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+// Dummy Data
+const testData = [
+  {
+    srNo: 1,
+    testName: 'Mock Test 1',
+    result: '75%',
+    subject: 'Mathematics',
+    details: 'Scored high in algebra, but geometry needs improvement.',
+  },
+  {
+    srNo: 2,
+    testName: 'Mock Test 2',
+    result: '82%',
+    subject: 'Physics',
+    details: 'Great in mechanics. Optics revision needed.',
+  },
+  {
+    srNo: 3,
+    testName: 'Mock Test 3',
+    result: '69%',
+    subject: 'Chemistry',
+    details: 'Focus on organic chemistry topics.',
+  },
+];
 
 const TestAnalysisScreen = () => {
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
+  const toggleExpand = (index) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
   return (
     <View style={styles.container}>
       <Header title="Test Analysis Report" />
-
       <View style={styles.content}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View>
-            {/* Table Header */}
-            <View style={styles.tableHeader}>
-              <Text style={styles.headerCell}>Sr No.</Text>
-              <Text style={styles.headerCell}>Test Name</Text>
-              <Text style={styles.headerCell}>Result</Text>
-              <Text style={styles.headerCell}>Subject Name</Text>
-            </View>
+        <Text style={styles.infoText}>
+          Your test reports are shown below with detailed feedback:
+        </Text>
 
-            {/* Show "No Data Found" when the array is empty */}
-            {testData.length === 0 ? (
-              <View style={styles.noDataContainer}>
-                <Text style={styles.noDataText}>No Data Found</Text>
+        <ScrollView>
+          {testData.length > 0 ? (
+            testData.map((item, index) => (
+              <View key={index} style={styles.cardContainer}>
+                <TouchableOpacity onPress={() => toggleExpand(index)} style={styles.cardHeader}>
+                  <Text style={styles.cardTitle}>{item.testName}</Text>
+                  <Icon
+                    name={expandedIndex === index ? 'expand-less' : 'expand-more'}
+                    size={24}
+                    color="#000"
+                  />
+                </TouchableOpacity>
+
+                {expandedIndex === index && (
+                  <View style={styles.cardBody}>
+                    <Text style={styles.detailText}>Sr No: {item.srNo}</Text>
+                    <Text style={styles.detailText}>Subject: {item.subject}</Text>
+                    <Text style={styles.detailText}>Result: {item.result}</Text>
+                    <Text style={styles.detailText}>Remarks: {item.details}</Text>
+                  </View>
+                )}
               </View>
-            ) : (
-              testData.map((item, index) => (
-                <View key={index} style={styles.tableRow}>
-                  <Text style={styles.rowCell}>{item.srNo}</Text>
-                  <Text style={styles.rowCell}>{item.testName}</Text>
-                  <Text style={styles.rowCell}>{item.result}</Text>
-                  <Text style={styles.rowCell}>{item.subject}</Text>
-                </View>
-              ))
-            )}
-          </View>
+            ))
+          ) : (
+            <View style={styles.noDataContainer}>
+              <Text style={styles.noDataText}>No Data Found</Text>
+            </View>
+          )}
         </ScrollView>
       </View>
     </View>
@@ -117,50 +101,50 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 15,
-    justifyContent: 'center', // Centering "No Data Found" text
+  },
+  infoText: {
+    fontSize: 16,
+    color: '#000',
+    marginVertical: 20,
+    fontWeight: 'bold',
+  },
+  cardContainer: {
+    marginBottom: 10,
+    backgroundColor: '#FFFBE9',
+    borderRadius: 8,
+    overflow: 'hidden',
+    elevation: 2,
+  },
+  cardHeader: {
+    backgroundColor: '#FFD601',
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  tableHeader: {
-    flexDirection: 'row',
-    backgroundColor: '#FFD601',
-    paddingVertical: 30,
-    paddingHorizontal: 10,
-    marginTop:45
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  cardBody: {
+    padding: 15,
+    backgroundColor: '#FFFBE9',
+  },
+  detailText: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 5,
   },
   noDataContainer: {
-    // marginTop: 0,
+    marginTop: 50,
     alignItems: 'center',
-    backgroundColor:'#FFFBE9',
-    paddingVertical:30,
-
-
   },
   noDataText: {
+    fontSize: 14,
     color: 'red',
-    fontSize: 16,
-    fontWeight: 'semibold',
-    backgroundColor:'#FFFBE9'
-  },
-  tableRow: {
-    flexDirection: 'row',
-    backgroundColor: 'FFFBE9',
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-  },
-  headerCell: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    width: 120, 
-    textAlign: 'center',
-  },
-  rowCell: {
-    fontSize: 14,
-    width: 120,
-    textAlign: 'center',
   },
 });
 
 export default TestAnalysisScreen;
-
